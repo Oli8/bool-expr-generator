@@ -6,7 +6,11 @@ class BoolExpr {
 			operatorsDisplayed: {},
 			complexity: 2,
 			logicalValues: [true, false],
+			invertedValue: false,
 		}, options);
+
+		if (this.options.invertedValue)
+			this.generateInvertedValues();
 	}
 
 	generate() {
@@ -17,6 +21,12 @@ class BoolExpr {
 		}
 
 		return expression;
+	}
+
+	generateInvertedValues() {
+		this.options.logicalValues = this.options.logicalValues.concat(
+			this.options.logicalValues.map(v => "!" + v)
+		);
 	}
 
 	static _arrayRandom(array) {
