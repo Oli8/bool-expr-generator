@@ -34,7 +34,8 @@ class BoolExpr {
 	}
 
 	_randomOperator() {
-		return this.constructor._arrayRandom(this.options.operators);
+		const operator = this.constructor._arrayRandom(this.options.operators);
+		return this.options.operatorsDisplayed[operator] || operator;
 	}
 
 	_randomLogicalValue() {
