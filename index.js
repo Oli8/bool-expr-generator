@@ -12,7 +12,7 @@ class BoolExpr {
 	generate() {
 		let expression = this.constructor._arrayRandom(this.options.logicalValues);
 
-		for(let i=0; i<this.options.complexity - 1; i++) {
+		for(let i=0, complexity=this.options.complexity ; i<complexity - 1; i++) {
 			expression += ` ${this._randomOperator()} ${this._randomLogicalValue()}`
 		}
 
