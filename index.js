@@ -1,6 +1,6 @@
 class BoolExpr {
 
-	constructor(options = {}) {
+	constructor(options={}) {
 		this.options = Object.assign({
 			operators: ['||', '&&'],
 			operatorsDisplayed: {},
