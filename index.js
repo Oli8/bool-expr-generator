@@ -10,7 +10,7 @@ class BoolExpr {
 		}, options);
 
 		if (this.options.invertedValue)
-			this.generateInvertedValues();
+			this._generateInvertedValues();
 	}
 
 	generate() {
@@ -23,7 +23,7 @@ class BoolExpr {
 		return expression;
 	}
 
-	generateInvertedValues() {
+	_generateInvertedValues() {
 		this.options.logicalValues = this.options.logicalValues.concat(
 			this.options.logicalValues.map(v => "!" + v)
 		);
