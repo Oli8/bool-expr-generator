@@ -16,7 +16,7 @@ class BoolExpr {
 	generate() {
 		let expression = this.constructor._arrayRandom(this.options.logicalValues);
 
-		for(let i=0, complexity=this.options.complexity ; i<complexity - 1; i++) {
+		for (let i=0, complexity=this.options.complexity ; i<complexity - 1; i++) {
 			expression += ` ${this._randomOperator()} ${this._randomLogicalValue()}`
 		}
 
@@ -25,7 +25,7 @@ class BoolExpr {
 
 	_generateInvertedValues() {
 		this.options.logicalValues = this.options.logicalValues.concat(
-			this.options.logicalValues.map(v => "!" + v)
+			this.options.logicalValues.map(v => '!' + v)
 		);
 	}
 
