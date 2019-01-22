@@ -13,19 +13,20 @@ class BoolExpr {
 			this._generateInvertedValues();
 	}
 
-	generate() {
-		let expression = this.constructor._arrayRandom(this.options.logicalValues);
+	generate(complexity=this.options.complexity, nested=false) {
+		let expression = this._randomLogicalValue(nested);
 
-		for (let i=0, complexity=this.options.complexity ; i<complexity - 1; i++) {
-			expression += ` ${this._randomOperator()} ${this._randomLogicalValue()}`
+		for (let i=0; i<complexity - 1; i++) {
+			expression += ` ${this._randomOperator()} ${this._randomLogicalValue(nested)}`
 		}
 
-		return expression;
+		return nested ? `(${expression})` : expression;
 	}
 
 	_generateInvertedValues() {
 		this.options.logicalValues = this.options.logicalValues.concat(
-			this.options.logicalValues.map(v => '!' + v)
+			this._removeArraysfromArray(this.options.logicalValues)
+				.map(v => '!' + v)
 		);
 	}
 
@@ -38,8 +39,23 @@ class BoolExpr {
 		return this.options.operatorsDisplayed[operator] || operator;
 	}
 
-	_randomLogicalValue() {
-		return this.constructor._arrayRandom(this.options.logicalValues);
+	_randomLogicalValue(onlyPrimitive=false) {
+		const logicalValues = onlyPrimitive ?
+			this._removeArraysfromArray(this.options.logicalValues) :
+			this.options.logicalValues;
+		const logicalValue = this.constructor._arrayRandom(logicalValues);
+		if (Array.isArray(logicalValue) && logicalValue[0] === 'NESTED_EXPR') {
+			return this.generate(logicalValue[1], true);
+		}
+		return logicalValue;
+	}
+
+	_removeArraysfromArray(array) {
+		return array.filter(v => !Array.isArray(v));
+	}
+
+	static nestedExpr(complexity) {
+		return ['NESTED_EXPR', complexity];
 	}
 
 	convert(expression) {
