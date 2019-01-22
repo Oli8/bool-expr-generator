@@ -41,4 +41,18 @@ class BoolExpr {
 	_randomLogicalValue() {
 		return this.constructor._arrayRandom(this.options.logicalValues);
 	}
+
+	convert(expression) {
+		const operatorsDisplayed = this.options.operatorsDisplayed;
+		const searchRegex = new RegExp(Object.values(operatorsDisplayed).join('|'), 'g');
+
+		return expression.replace(
+			searchRegex,
+			op => {
+				return Object.keys(operatorsDisplayed).find(key => {
+					return operatorsDisplayed[key] === op;
+				})
+			}
+		);
+	}
 }
