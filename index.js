@@ -14,8 +14,10 @@ class BoolExpr {
 	}
 
 	generate(complexity=this.options.complexity, nested=false) {
-		let expression = this._randomLogicalValue(nested);
+		if (Array.isArray(complexity))
+			complexity = this.constructor._arrayRandom(complexity);
 
+		let expression = this._randomLogicalValue(nested);
 		for (let i=0; i<complexity - 1; i++) {
 			expression += ` ${this._randomOperator()} ${this._randomLogicalValue(nested)}`
 		}
@@ -47,6 +49,7 @@ class BoolExpr {
 		if (Array.isArray(logicalValue) && logicalValue[0] === 'NESTED_EXPR') {
 			return this.generate(logicalValue[1], true);
 		}
+
 		return logicalValue;
 	}
 
