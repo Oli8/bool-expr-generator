@@ -6,7 +6,7 @@ A simple generator of boolean expressions.
 
 ```js
 const boolGenerator = new BoolExpr();
-let expr = boolGenerator.generate(); // e.g.: 'true && false'
+let expr = boolGenerator.generate(); // 'true && false'
 
 // You may pass an option object to the constructor
 const boolGenerator = new BoolExpr({
@@ -16,6 +16,9 @@ const boolGenerator = new BoolExpr({
 	logicalValues: [true, false, 0, 1],
 	invertedValue: true,
 });
+let expr = boolGenerator.generate(); // 'false XOR 1 OR true'
+// If cou customised the operatorsDisplayed option you can use the convert method to convert the expression into an evaluable one
+console.log(boolGenerator.convert(expr)); // 'false ^ 1 || true'
 ```
 
 ### Option object  
