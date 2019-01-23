@@ -1,0 +1,25 @@
+{
+  "name": "bool-expr-generator",
+  "version": "1.0.0",
+  "description": "A simple generator of boolean expressions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oli8/bool-expr-generator.git"
+  },
+  "keywords": [
+    "generator",
+    "boolean",
+    "boolean",
+    "expression"
+  ],
+  "author": "Olivier Crété",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oli8/bool-expr-generator/issues"
+  },
+  "homepage": "https://github.com/Oli8/bool-expr-generator#readme"
+}
