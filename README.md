@@ -2,6 +2,12 @@
 
 A simple generator of boolean expressions.  
 
+## Installation
+#### NPM
+```shell
+npm install --save bool-expr-generator
+```
+
 ## Usage
 
 ```js
