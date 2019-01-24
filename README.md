@@ -11,6 +11,7 @@ npm install --save bool-expr-generator
 ## Usage
 
 ```js
+const BoolExpr = require('bool-expr-generator');
 const boolGenerator = new BoolExpr();
 let expr = boolGenerator.generate(); // 'true && false'
 
