@@ -26,6 +26,12 @@ const boolGenerator = new BoolExpr({
 let expr = boolGenerator.generate(); // 'false XOR 1 OR true'
 // If cou customised the operatorsDisplayed option you can use the convert method to convert the expression into an evaluable one
 console.log(boolGenerator.convert(expr)); // 'false ^ 1 || true'
+
+// You can also use a nested expression of given complexity as logical value
+const boolGenerator = new BoolExpr({
+	logicalValues: [true, false, BoolExpr.nestedExpr(2)], // Note that you need you combine them with at least one primitive logical value
+});
+let expr = boolGenerator.generate(); // 'false && (false || true)'
 ```
 
 ### Option object  
