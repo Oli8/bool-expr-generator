@@ -1,8 +1,8 @@
-(function(){
+(function() {
 	class BoolExpr {
 
 		constructor(options={}) {
-			this.options = Object.assign({
+			this._options = Object.assign({
 				operators: ['||', '&&'],
 				operatorsDisplayed: {},
 				complexity: 2,
@@ -10,25 +10,29 @@
 				invertedValue: false,
 			}, options);
 
-			if (this.options.invertedValue)
+			if (this._options.invertedValue)
 				this._generateInvertedValues();
 		}
 
-		generate({complexity=this.options.complexity, nested=false}={}) {
+		generate({complexity=this._options.complexity, nested=false}={}) {
 			if (Array.isArray(complexity))
 				complexity = this.constructor._arrayRandom(complexity);
 
 			let expression = this._randomLogicalValue({onlyPrimitive: nested});
-			for (let i=0; i<complexity - 1; i++) {
+			for (let i=0; i<complexity-1; i++) {
 				expression += ` ${this._randomOperator()} ${this._randomLogicalValue({onlyPrimitive: nested})}`
 			}
 
 			return nested ? `(${expression})` : expression;
 		}
 
+		options(options) {
+			 Object.assign(this._options, options);
+		}
+
 		_generateInvertedValues() {
-			this.options.logicalValues = this.options.logicalValues.concat(
-				this._removeArraysfromArray(this.options.logicalValues)
+			this._options.logicalValues = this._options.logicalValues.concat(
+				this._removeArraysfromArray(this._options.logicalValues)
 					.map(v => '!' + v)
 			);
 		}
@@ -38,14 +42,14 @@
 		}
 
 		_randomOperator() {
-			const operator = this.constructor._arrayRandom(this.options.operators);
-			return this.options.operatorsDisplayed[operator] || operator;
+			const operator = this.constructor._arrayRandom(this._options.operators);
+			return this._options.operatorsDisplayed[operator] || operator;
 		}
 
 		_randomLogicalValue({onlyPrimitive=false}={}) {
 			const logicalValues = onlyPrimitive ?
-				this._removeArraysfromArray(this.options.logicalValues) :
-				this.options.logicalValues;
+				this._removeArraysfromArray(this._options.logicalValues) :
+				this._options.logicalValues;
 			const logicalValue = this.constructor._arrayRandom(logicalValues);
 			if (Array.isArray(logicalValue) && logicalValue[0] === 'NESTED_EXPR') {
 				return this.generate({complexity: logicalValue[1], nested: true});
@@ -63,7 +67,7 @@
 		}
 
 		convert(expression) {
-			const operatorsDisplayed = this.options.operatorsDisplayed;
+			const operatorsDisplayed = this._options.operatorsDisplayed;
 			const searchRegex = new RegExp(Object.values(operatorsDisplayed).join('|'), 'g');
 
 			return expression.replace(
