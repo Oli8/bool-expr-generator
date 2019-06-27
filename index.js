@@ -68,6 +68,9 @@
 
 		convert(expression) {
 			const operatorsDisplayed = this._options.operatorsDisplayed;
+			// Return original expression if operatorsDisplayed is empty
+			if (Object.keys(operatorsDisplayed).length === 0)
+				return expression;
 			const searchRegex = new RegExp(Object.values(operatorsDisplayed).join('|'), 'g');
 
 			return expression.replace(
