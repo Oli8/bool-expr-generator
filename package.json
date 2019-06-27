@@ -1,6 +1,6 @@
 {
   "name": "bool-expr-generator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple generator of boolean expressions.",
   "main": "index.js",
   "scripts": {
