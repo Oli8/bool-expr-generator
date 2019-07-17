@@ -30,11 +30,11 @@ console.log(boolGenerator.convert(expr)); // 'false ^ 1 || true'
 boolGenerator.options({complexity: 4});
 console.log(boolGenerator.generate()); // true XOR 1 AND !0 OR !0
 
-// You can also use a nested expression of given complexity as logical value
+// You can also use a nested expression with or without its own options
 const boolGenerator = new BoolExpr({
-	logicalValues: [true, false, BoolExpr.nestedExpr(2)], // Note that you need you combine them with at least one primitive logical value
+	logicalValues: [true, false, BoolExpr.nestedExpr({complexity: 2, logicalValues: [0, 1]})], // Note that it is advised to specify the logicalValues
 });
-let expr = boolGenerator.generate(); // 'false && (false || true)'
+let expr = boolGenerator.generate(); // 'false && (0 || 1)'
 ```
 
 ### Option object  
