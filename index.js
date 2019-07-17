@@ -14,13 +14,19 @@
 				this._generateInvertedValues();
 		}
 
-		generate({complexity=this._options.complexity, nested=false}={}) {
+		generate({options=this._options, nested=false}={}) {
+			if (nested)
+				options = {...this._options, ...options};
+
+			let complexity = options.complexity;
 			if (Array.isArray(complexity))
 				complexity = this.constructor._arrayRandom(complexity);
 
-			let expression = this._randomLogicalValue({onlyPrimitive: nested});
+			const getLogicalValue = this._randomLogicalValue.bind(
+				this, {options, onlyPrimitive: nested});
+			let expression = getLogicalValue();
 			for (let i=0; i<complexity-1; i++) {
-				expression += ` ${this._randomOperator()} ${this._randomLogicalValue({onlyPrimitive: nested})}`
+				expression += ` ${this._randomOperator(options)} ${getLogicalValue()}`
 			}
 
 			return nested ? `(${expression})` : expression;
@@ -41,18 +47,15 @@
 			return array[Math.floor(Math.random() * array.length)];
 		}
 
-		_randomOperator() {
-			const operator = this.constructor._arrayRandom(this._options.operators);
-			return this._options.operatorsDisplayed[operator] || operator;
+		_randomOperator(options) {
+			const operator = this.constructor._arrayRandom(options.operators);
+			return options.operatorsDisplayed[operator] || operator;
 		}
 
-		_randomLogicalValue({onlyPrimitive=false}={}) {
-			const logicalValues = onlyPrimitive ?
-				this._removeArraysfromArray(this._options.logicalValues) :
-				this._options.logicalValues;
-			const logicalValue = this.constructor._arrayRandom(logicalValues);
+		_randomLogicalValue({options=this._options, onlyPrimitive=false}={}) {
+			const logicalValue = this.constructor._arrayRandom(options.logicalValues);
 			if (Array.isArray(logicalValue) && logicalValue[0] === 'NESTED_EXPR') {
-				return this.generate({complexity: logicalValue[1], nested: true});
+				return this.generate({options: logicalValue[1], nested: true});
 			}
 
 			return logicalValue;
@@ -62,8 +65,8 @@
 			return array.filter(v => !Array.isArray(v));
 		}
 
-		static nestedExpr(complexity) {
-			return ['NESTED_EXPR', complexity];
+		static nestedExpr(options={}) {
+			return ['NESTED_EXPR', options];
 		}
 
 		convert(expression) {
