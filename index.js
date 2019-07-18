@@ -22,8 +22,7 @@
 			if (Array.isArray(complexity))
 				complexity = this.constructor._arrayRandom(complexity);
 
-			const getLogicalValue = this._randomLogicalValue.bind(
-				this, {options, onlyPrimitive: nested});
+			const getLogicalValue = this._randomLogicalValue.bind(this, options);
 			let expression = getLogicalValue();
 			for (let i=0; i<complexity-1; i++) {
 				expression += ` ${this._randomOperator(options)} ${getLogicalValue()}`
@@ -52,7 +51,7 @@
 			return options.operatorsDisplayed[operator] || operator;
 		}
 
-		_randomLogicalValue({options=this._options, onlyPrimitive=false}={}) {
+		_randomLogicalValue(options) {
 			const logicalValue = this.constructor._arrayRandom(options.logicalValues);
 			if (Array.isArray(logicalValue) && logicalValue[0] === 'NESTED_EXPR') {
 				return this.generate({options: logicalValue[1], nested: true});
