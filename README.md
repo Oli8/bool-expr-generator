@@ -44,4 +44,4 @@ let expr = boolGenerator.generate(); // 'false && (0 || 1)'
 | operators | `Array<string>`  | `['\|\|', '&&']` | `['\|\|', '&&', '^']` | The logical operators to be used |
 | operatorsDisplayed | `Object`  | `{}` | `{'^': 'XOR'}` | How the operators will be displayed in the expresssion |
 | logicalValues | `Array`  | `[true, false]` | `[0, 1, true, false]` | The logical values that can be included into the expression |
-| invertedValue | `boolean`  | `false` | `true` | Whether to add the inverted logical values |
+| invertedValue | `boolean` \| `float`  | `false` | `true` \| `.3` | Whether to add the inverted logical values or probability to have an inverted value for each logical values |
