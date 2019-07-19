@@ -9,9 +9,6 @@
 				logicalValues: [true, false],
 				invertedValue: false,
 			}, options);
-
-			if (this._options.invertedValue)
-				this._generateInvertedValues();
 		}
 
 		generate({options=this._options, nested=false}={}) {
@@ -28,18 +25,13 @@
 				expression += ` ${this._randomOperator(options)} ${getLogicalValue()}`
 			}
 
-			return nested ? `(${expression})` : expression;
+			return nested ?
+				`${this._addBangIfShouldInvert(this._options.invertedValue)}(${expression})`
+				: expression;
 		}
 
 		options(options) {
 			 Object.assign(this._options, options);
-		}
-
-		_generateInvertedValues() {
-			this._options.logicalValues = this._options.logicalValues.concat(
-				this._removeArraysfromArray(this._options.logicalValues)
-					.map(v => '!' + v)
-			);
 		}
 
 		static _arrayRandom(array) {
@@ -57,11 +49,14 @@
 				return this.generate({options: logicalValue[1], nested: true});
 			}
 
-			return logicalValue;
+			return this._addBangIfShouldInvert(options.invertedValue) + logicalValue;
 		}
 
-		_removeArraysfromArray(array) {
-			return array.filter(v => !Array.isArray(v));
+		_addBangIfShouldInvert(invertedValue) {
+			if (!invertedValue || Math.random() > (invertedValue === true ? .5 : invertedValue))
+				return '';
+
+			return '!';
 		}
 
 		static nestedExpr(options={}) {
