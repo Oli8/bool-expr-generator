@@ -13,7 +13,7 @@
 
 		generate({options=this._options, nested=false}={}) {
 			if (nested)
-				options = {...this._options, ...options};
+				options = Object.assign({}, this._options, options);
 
 			let complexity = options.complexity;
 			if (Array.isArray(complexity))
