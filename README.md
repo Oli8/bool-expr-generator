@@ -13,7 +13,7 @@ npm install --save bool-expr-generator
 ```js
 import BoolExpr from 'bool-expr-generator';
 const boolGenerator = new BoolExpr();
-let expr = boolGenerator.generate(); // 'true && false'
+const expr = boolGenerator.generate(); // 'true && false'
 
 // You may pass an option object to the constructor
 const boolGenerator = new BoolExpr({
@@ -23,7 +23,7 @@ const boolGenerator = new BoolExpr({
 	logicalValues: [true, false, 0, 1],
 	invertedValue: true,
 });
-let expr = boolGenerator.generate(); // 'false XOR 1 OR true'
+const expr = boolGenerator.generate(); // 'false XOR 1 OR true'
 // If cou customised the operatorsDisplayed option you can use the convert method to convert the expression into an evaluable one
 console.log(boolGenerator.convert(expr)); // 'false ^ 1 || true'
 // Update options:
@@ -34,7 +34,7 @@ console.log(boolGenerator.generate()); // true XOR 1 AND !0 OR !0
 const boolGenerator = new BoolExpr({
 	logicalValues: [true, false, BoolExpr.nestedExpr({complexity: 2, logicalValues: [0, 1]})], // Note that it is advised to specify the logicalValues
 });
-let expr = boolGenerator.generate(); // 'false && (0 || 1)'
+const expr = boolGenerator.generate(); // 'false && (0 || 1)'
 ```
 
 ### Option object  
